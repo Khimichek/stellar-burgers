@@ -37,14 +37,19 @@ export const registerUserThunk = createAsyncThunk(
 
 export const loginUserThunk = createAsyncThunk(
   'user/loginUser',
-  async ({ email, password }: TLoginData) => loginUserApi({ email, password })
+  async (data: TLoginData) =>
+    loginUserApi(data).then((data) => {
+      setCookie('accessToken', data.accessToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
+      return data;
+    })
 );
 
 export const logoutUserThunk = createAsyncThunk('user/logoutUser', async () => {
-  const response = await logoutApi();
-  localStorage.clear(); // очищаем refreshToken !!!!!????? ИЛИ .removeItem('refreshToken');
+  const data = await logoutApi();
+  localStorage.removeItem('refreshToken');
   deleteCookie('accessToken');
-  return response;
+  return data;
 });
 
 export const updateUserThunk = createAsyncThunk(

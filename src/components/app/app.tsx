@@ -1,7 +1,7 @@
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { setAuthChecked } from '../../services/slices/userSlice';
+import { getUserThunk, setAuthChecked } from '../../services/slices/userSlice';
 import { ProtectedRoute } from '../protected-route/protected-route';
-
+import { getIngredientsThunk } from '../../services/slices/ingredientSlice';
 import {
   ConstructorPage,
   Feed,
@@ -31,7 +31,9 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getIngredientsThunk());
     dispatch(setAuthChecked());
+    dispatch(getUserThunk());
   }, []);
 
   return (
@@ -55,7 +57,7 @@ const App = () => {
         <Route
           path='/register'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <Register />
             </ProtectedRoute>
           }
@@ -64,7 +66,7 @@ const App = () => {
         <Route
           path='/forgot-password'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <ForgotPassword />
             </ProtectedRoute>
           }
@@ -72,7 +74,7 @@ const App = () => {
         <Route
           path='/reset-password'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth={false}>
               <ResetPassword />
             </ProtectedRoute>
           }
@@ -80,7 +82,7 @@ const App = () => {
         <Route
           path='/profile'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth={false}>
               <Profile />
             </ProtectedRoute>
           }
@@ -88,7 +90,7 @@ const App = () => {
         <Route
           path='/profile/orders'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth={false}>
               <ProfileOrders />
             </ProtectedRoute>
           }
@@ -96,7 +98,7 @@ const App = () => {
         <Route
           path='/profile/orders/:number'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth={false}>
               <OrderInfo />
             </ProtectedRoute>
           }
@@ -123,7 +125,7 @@ const App = () => {
           <Route
             path='/profile/orders/:number'
             element={
-              <ProtectedRoute>
+              <ProtectedRoute onlyUnAuth={false}>
                 <Modal
                   title={'Информация о заказе'}
                   onClose={() => navigate(-1)}
