@@ -10,8 +10,6 @@ import { getOrderByNumberThunk } from '../../services/slices/feedSlice';
 import { selectOrderLoading } from '../../services/slices/orderSlice';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-
   const orderData = useSelector(selectFeedOrder);
   const ingredients: TIngredient[] = useSelector(selectIngredientsData);
   const dispatch = useDispatch();

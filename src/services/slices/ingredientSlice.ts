@@ -2,7 +2,7 @@ import { TIngredient } from '@utils-types';
 import { getIngredientsApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-enum RequestsStatus {
+export enum RequestsStatus {
   Idle = 'Idle',
   Loading = 'Loading',
   Success = 'Success',

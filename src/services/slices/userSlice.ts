@@ -6,22 +6,25 @@ import {
   logoutApi,
   TRegisterData,
   registerUserApi,
-  updateUserApi
+  updateUserApi,
+  getOrdersApi
 } from '@api';
 import { getCookie, setCookie, deleteCookie } from '../../utils/cookie';
-import { TUser } from '@utils-types';
+import { TOrder, TUser } from '@utils-types';
 import { RootState } from '../store';
 
 export interface UserState {
   isAuthChecked: boolean;
-  isLoading: boolean;
+  loading: boolean;
   user: TUser | null;
+  orders: TOrder[];
   error: string | null;
 }
 
 export const initialState: UserState = {
+  orders: [],
   isAuthChecked: false,
-  isLoading: false,
+  loading: false,
   user: null,
   error: null
 };
@@ -55,6 +58,14 @@ export const logoutUserThunk = createAsyncThunk('user/logoutUser', async () => {
 export const updateUserThunk = createAsyncThunk(
   'user/updateUser',
   async (data: Partial<TRegisterData>) => await updateUserApi(data)
+);
+
+export const getUserOrdersThunk = createAsyncThunk<TOrder[]>(
+  'user/getUserOrders',
+  async () => {
+    const response = await getOrdersApi();
+    return response;
+  }
 );
 
 export const isAuthUserThunk = createAsyncThunk(
@@ -136,18 +147,37 @@ export const userSlice = createSlice({
         state.user = action.payload.user;
         state.error = null;
         state.isAuthChecked = true;
+      })
+      .addCase(getUserOrdersThunk.pending, (state) => {
+        //state.isAuthChecked = true;
+        //state.error = null;
+        state.loading = true;
+      })
+      .addCase(getUserOrdersThunk.rejected, (state, action) => {
+        //state.isAuthChecked = false;
+        state.error = action.error.message || 'Ой, произошла ошибка!';
+        //state.loading = false;
+      })
+      .addCase(getUserOrdersThunk.fulfilled, (state, action) => {
+        state.orders = action.payload;
+        //state.error = null;
+        //state.isAuthChecked = false;
       });
+  },
+  selectors: {
+    selectUser: (state) => state.user,
+    selectIsAuthChecked: (state) => state.isAuthChecked,
+    selectUserOrders: (state) => state.orders,
+    //userLoadingSelector: (state) => state.loading,
+    selectError: (state) => state.error
   }
 });
 
-// Селекторы
-export const selectUser = (state: RootState): TUser | null => state.user.user;
-export const selectIsAuthChecked = (state: RootState): boolean =>
-  state.user.isAuthChecked;
-export const selectError = (state: RootState): string | null | undefined =>
-  state.user.error;
-export const selectIsAuthenticated = (state: RootState): boolean =>
-  !!state.user.user;
-
+export const {
+  selectUser,
+  selectIsAuthChecked,
+  selectUserOrders,
+  selectError
+} = userSlice.selectors;
 export const { setAuthChecked } = userSlice.actions;
 export default userSlice.reducer;

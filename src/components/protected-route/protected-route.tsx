@@ -23,9 +23,7 @@ export const ProtectedRoute = ({
 
   const location = useLocation();
 
-  const from = location.state?.from || '/';
-
-  if (!isAuthChecked) {
+  if (!isAuthChecked && user) {
     return <Preloader />;
   }
 
@@ -36,6 +34,7 @@ export const ProtectedRoute = ({
 
   if (onlyUnAuth && user) {
     // если пользователь на странице авторизации и данные есть в хранилище
+    const from = location.state?.from || { pathname: '/' };
     return <Navigate replace to={from} />;
   }
 
