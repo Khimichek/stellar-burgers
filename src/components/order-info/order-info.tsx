@@ -7,6 +7,7 @@ import { selectFeedOrder } from '../../services/slices/feedSlice';
 import { selectIngredientsData } from '../../services/slices/ingredientSlice';
 import { useDispatch, useSelector } from '../../services/store';
 import { getOrderByNumberThunk } from '../../services/slices/feedSlice';
+import { selectOrderLoading } from '../../services/slices/orderSlice';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
@@ -15,6 +16,7 @@ export const OrderInfo: FC = () => {
   const ingredients: TIngredient[] = useSelector(selectIngredientsData);
   const dispatch = useDispatch();
   const { number } = useParams();
+  const loading = useSelector(selectOrderLoading);
 
   useEffect(() => {
     dispatch(getOrderByNumberThunk(Number(number)));
