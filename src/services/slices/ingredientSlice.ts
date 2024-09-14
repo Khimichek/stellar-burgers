@@ -48,3 +48,5 @@ export const ingredientSlice = createSlice({
 });
 
 export const selectIngredients = ingredientSlice.selectors;
+export const { selectIngredientsData, selectIngredientsStatus } =
+  ingredientSlice.selectors;
