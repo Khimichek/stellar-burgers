@@ -16,7 +16,7 @@ export interface UserState {
   isAuthChecked: boolean;
   isLoading: boolean;
   user: TUser | null;
-  error: string | null | undefined;
+  error: string | null;
 }
 
 export const initialState: UserState = {
@@ -82,7 +82,7 @@ export const userSlice = createSlice({
         state.isAuthChecked = false;
       })
       .addCase(getUserThunk.rejected, (state, action) => {
-        state.error = action.error?.message;
+        state.error = action.error.message || 'Ой, произошла ошибка!';
         state.isAuthChecked = true;
       })
       .addCase(getUserThunk.fulfilled, (state, action) => {
@@ -95,7 +95,7 @@ export const userSlice = createSlice({
       })
       .addCase(registerUserThunk.rejected, (state, action) => {
         state.isAuthChecked = true;
-        state.error = action.error?.message;
+        state.error = action.error.message || 'Ой, произошла ошибка!';
       })
       .addCase(registerUserThunk.fulfilled, (state, action) => {
         state.user = action.payload.user;
@@ -108,7 +108,7 @@ export const userSlice = createSlice({
       })
       .addCase(loginUserThunk.rejected, (state, action) => {
         state.isAuthChecked = true;
-        state.error = action.error?.message;
+        state.error = action.error.message || 'Ой, произошла ошибка!';
       })
       .addCase(loginUserThunk.fulfilled, (state, action) => {
         state.user = action.payload.user;
@@ -130,7 +130,7 @@ export const userSlice = createSlice({
       })
       .addCase(updateUserThunk.rejected, (state, action) => {
         state.isAuthChecked = true;
-        state.error = action.error?.message;
+        state.error = action.error.message || 'Ой, произошла ошибка!';
       })
       .addCase(updateUserThunk.fulfilled, (state, action) => {
         state.user = action.payload.user;

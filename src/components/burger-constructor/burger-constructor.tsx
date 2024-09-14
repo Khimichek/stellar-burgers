@@ -5,29 +5,47 @@ import { BurgerConstructorUI } from '@ui';
 import { useDispatch } from '../../services/store';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { selectBurgerConstructor } from '../../services/slices/burgerConstructorSlice';
+import {
+  selectBurgerConstructor,
+  clearConstructor
+} from '../../services/slices/burgerConstructorSlice';
+import {
+  selectOrderLoading,
+  selectOrder,
+  OrderThunk,
+  clearOrder
+} from '../../services/slices/orderSlice';
+import { selectUser } from '../../services/slices/userSlice';
 
 export const BurgerConstructor: FC = () => {
-  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const constructorItems = useSelector(selectBurgerConstructor);
+  const orderRequest = useSelector(selectOrderLoading);
+  const orderModalData = useSelector(selectOrder);
 
-  /*bun: {
-      price: 0
-    },
-    ingredients: []*/
-  //};
-
-  const orderRequest = false;
-
-  const orderModalData = null;
+  const user = useSelector(selectUser);
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
+
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+    const ingredientIds = [
+      constructorItems.bun._id,
+      ...constructorItems.ingredients.map((ingredient) => ingredient._id),
+      constructorItems.bun._id
+    ];
+    dispatch(OrderThunk(ingredientIds));
   };
-  const closeOrderModal = () => {};
+
+  const closeOrderModal = () => {
+    dispatch(clearConstructor());
+    dispatch(clearOrder());
+  };
 
   const price = useMemo(
     () =>
