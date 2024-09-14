@@ -7,8 +7,6 @@ import {
   selectUser
 } from '../../services/slices/userSlice';
 
-type TProtectedRouteType = 'auth' | 'unauth';
-
 type ProtectedRouteProps = {
   children: React.ReactElement;
   onlyUnAuth?: boolean;

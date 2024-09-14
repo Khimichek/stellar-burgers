@@ -68,7 +68,6 @@ export const feedSlice = createSlice({
     selectFeedOrder: (state) => state.order,
     selectFeedTotal: (state) => state.total,
     selectFeedTotalToday: (state) => state.totalToday
-    //feedErrorSelector: (state) => state.error
   }
 });
 

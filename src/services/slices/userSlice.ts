@@ -154,26 +154,19 @@ export const userSlice = createSlice({
         state.isAuthChecked = true;
       })
       .addCase(getUserOrdersThunk.pending, (state) => {
-        //state.isAuthChecked = true;
-        //state.error = null;
         state.loading = true;
       })
       .addCase(getUserOrdersThunk.rejected, (state, action) => {
-        //state.isAuthChecked = false;
         state.error = action.error.message || 'Ой, произошла ошибка!';
-        //state.loading = false;
       })
       .addCase(getUserOrdersThunk.fulfilled, (state, action) => {
         state.orders = action.payload;
-        //state.error = null;
-        //state.isAuthChecked = false;
       });
   },
   selectors: {
     selectUser: (state) => state.user,
     selectIsAuthChecked: (state) => state.isAuthChecked,
     selectUserOrders: (state) => state.orders,
-    //userLoadingSelector: (state) => state.loading,
     selectError: (state) => state.error
   }
 });

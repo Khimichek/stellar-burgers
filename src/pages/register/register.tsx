@@ -14,14 +14,12 @@ export const Register: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const error = useSelector(selectError) || undefined; //und-d точно надо????
+  const error = useSelector(selectError) || '';
   const dispatch = useDispatch();
-  //const navigate = useNavigate();
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(registerUserThunk({ email, name: userName, password }));
-    //navigate('/');
   };
 
   return (
