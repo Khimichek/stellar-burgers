@@ -5,9 +5,7 @@ import {
   selectError
 } from '../../services/slices/userSlice';
 
-import { useDispatch } from '../../services/store';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../services/store';
 
 export const Register: FC = () => {
   const [userName, setUserName] = useState('');

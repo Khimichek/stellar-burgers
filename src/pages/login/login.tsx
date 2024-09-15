@@ -3,9 +3,7 @@ import { LoginUI } from '@ui-pages';
 
 import { loginUserThunk, selectError } from '../../services/slices/userSlice';
 
-import { useDispatch } from '../../services/store';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../services/store';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');

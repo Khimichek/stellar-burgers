@@ -1,8 +1,7 @@
 import { selectUser, updateUserThunk } from '../../services/slices/userSlice';
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 
 export const Profile: FC = () => {
   const dispatch = useDispatch();

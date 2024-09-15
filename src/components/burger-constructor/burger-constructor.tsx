@@ -2,8 +2,7 @@ import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 
-import { useDispatch } from '../../services/store';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/store';
 import { useNavigate } from 'react-router-dom';
 import {
   selectBurgerConstructor,

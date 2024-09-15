@@ -21,8 +21,6 @@ import { AppHeader, Modal, OrderInfo, IngredientDetails } from '@components';
 import '../../index.css';
 import styles from './app.module.css';
 import { useEffect } from 'react';
-import { store } from '../../services/store';
-import { Provider } from 'react-redux';
 
 const App = () => {
   const location = useLocation();
