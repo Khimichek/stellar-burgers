@@ -2,7 +2,7 @@ import { TIngredient, TOrder } from '@utils-types';
 import { getFeedsApi, getOrderByNumberApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-enum RequestsStatus {
+export enum RequestsStatus {
   Idle = 'Idle',
   Loading = 'Loading',
   Success = 'Success',
@@ -56,11 +56,11 @@ export const feedSlice = createSlice({
         state.status = RequestsStatus.Loading;
       })
       .addCase(getOrderByNumberThunk.fulfilled, (state, action) => {
-        state.status = RequestsStatus.Failed;
+        state.status = RequestsStatus.Success;
         state.order = action.payload.orders[0];
       })
       .addCase(getOrderByNumberThunk.rejected, (state) => {
-        state.status = RequestsStatus.Success;
+        state.status = RequestsStatus.Failed;
       });
   },
   selectors: {

@@ -94,7 +94,8 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier ./src --write",
-    "test": "jest"
+    "test": "jest",
+    "test:dev": "jest --watch --collectCoverage"
   },
   "eslintConfig": {
     "extends": [
@@ -114,8 +115,11 @@
     "testEnvironment": "jsdom",
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts"
+      "./src/services/store.ts",
+      "./src/services/slices/**",
+      "!**/src/services/slices/**/index.ts",
+      "!**/node_modules/**",
+      "!**/src/index.tsx"
     ],
     "coverageDirectory": "coverage",
     "coverageReporters": [
@@ -124,3 +128,5 @@
     ]
   }
 }
+
+
