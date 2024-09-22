@@ -108,6 +108,7 @@ export const userSlice = createSlice({
       .addCase(registerUserThunk.pending, (state) => {
         state.error = null;
         state.isAuthChecked = false;
+        state.loading = true;
       })
       .addCase(registerUserThunk.rejected, (state, action) => {
         state.isAuthChecked = true;
@@ -121,10 +122,12 @@ export const userSlice = createSlice({
       .addCase(loginUserThunk.pending, (state) => {
         state.isAuthChecked = false;
         state.error = null;
+        state.user = null;
+        state.loading = true;
       })
       .addCase(loginUserThunk.rejected, (state, action) => {
         state.isAuthChecked = true;
-        state.error = action.error.message || 'Ой, произошла ошибка!';
+        state.error = action.error.message || 'Ошибка';
       })
       .addCase(loginUserThunk.fulfilled, (state, action) => {
         state.user = action.payload.user;
@@ -133,16 +136,21 @@ export const userSlice = createSlice({
       })
       .addCase(logoutUserThunk.pending, (state) => {
         state.user = null;
-        state.error = null;
+        state.loading = true;
         state.isAuthChecked = false;
+        (state.error = null), (state.orders = []);
       })
       .addCase(logoutUserThunk.fulfilled, (state) => {
         state.user = null;
         state.isAuthChecked = true;
+        state.loading = false;
+        (state.error = null), (state.orders = []);
       })
       .addCase(updateUserThunk.pending, (state) => {
         state.isAuthChecked = false;
+        state.loading = true;
         state.error = null;
+        state.user = null;
       })
       .addCase(updateUserThunk.rejected, (state, action) => {
         state.isAuthChecked = true;

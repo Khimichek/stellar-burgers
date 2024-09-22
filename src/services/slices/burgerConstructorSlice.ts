@@ -4,7 +4,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 
 import { v4 as uuidv4 } from 'uuid'; // Генератор id для ингредиента или заказа
 
-type TConstructorIngredientState = {
+export type TConstructorIngredientState = {
   bun: TConstructorIngredient | null;
   ingredients: TConstructorIngredient[];
 };
