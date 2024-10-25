@@ -16,7 +16,6 @@
 4. Написаны unit тесты на Jest:
 5. Написаны интеграционные тесты на Cypress.
 
-
 ## Технологии
 * HTML, CSS, React, React-Router, TypeScript, React-Redux, Webpack
 
